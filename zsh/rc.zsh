@@ -30,7 +30,8 @@ precmd() {
 
 export VISUAL=nvim
 export EDITOR=nvim
-export PATH="$PATH:/usr/local/sbin:$DOTFILES/bin:$HOME/.local/bin"
+
+PATH="$PATH:/usr/local/sbin:$DOTFILES/bin:$HOME/.local/bin"
 
 eval "$(starship init zsh)"
 
