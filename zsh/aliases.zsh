@@ -110,3 +110,12 @@ dreset () {
     docker system prune -a
 }
 
+pathList() {
+  IFS=':' read -ra my_path <<< "$PATH"
+
+  for i in "$my_path[@]"
+  do
+    echo $i
+  done
+}
+
