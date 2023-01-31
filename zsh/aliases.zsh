@@ -110,13 +110,3 @@ dreset () {
     docker system prune -a
 }
 
-function path_list() {
-  
-  my_path=$(echo $PATH | tr ':' "\n")
-  
-  for i in "$my_path[@]"
-  do
-    echo $i
-  done
-}
-
