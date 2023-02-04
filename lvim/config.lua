@@ -1,6 +1,6 @@
 -- general lvim.log.level = "warn"
 lvim.format_on_save = true
-lvim.colorscheme = "tokyonight"
+-- lvim.colorscheme = "tokyonight"
 
 vim.opt.gdefault = true
 vim.opt.ignorecase = true
@@ -113,6 +113,7 @@ lvim.builtin.treesitter.ensure_installed = {
 
 lvim.builtin.treesitter.ignore_install = { "haskell" }
 lvim.builtin.treesitter.highlight.enabled = true
+lvim.builtin.treesitter.rainbow.enabled = true
 
 -- generic LSP settings
 
@@ -166,24 +167,38 @@ lvim.plugins = {
     end
   },
   { "tpope/vim-eunuch" },
-  -- { "github/copilot.vim" },
   {
     "folke/trouble.nvim",
     cmd = "TroubleToggle",
   },
   {
-    "folke/zen-mode.nvim",
+    "windwp/nvim-ts-autotag",
     config = function()
-      require("zen-mode").setup {
-        window = {
-          options = {
-            number = false
+      require("nvim-ts-autotag").setup()
+    end
+  },
+  {
+    "p00f/nvim-ts-rainbow",
+  },
+  {
+    "romgrk/nvim-treesitter-context",
+    config = function()
+      require("treesitter-context").setup {
+        enable = true,
+        throttle = true,
+        max_lines = 0,
+        pattern = {
+          default = {
+            'class',
+            'function',
+            'method'
           }
         }
       }
     end
   }
 }
+
 
 -- vim.api.nvim_create_autocmd("BufWritePre", {
 --   pattern = "*.ledger",
