@@ -10,7 +10,6 @@ alias vim='lvim -w ~/.vimlog "$@"'
 
 alias zn='vim $NOTES_DIR/$(date +"%Y%m%d%H%M.md")'
 
-alias ta='tmux attach -t'
 
 alias l='exa -lah'
 alias ls=exa
@@ -20,6 +19,11 @@ alias s='source ~/.zshrc'
 alias rm=trash
 alias trim="awk '{\$1=\$1;print}'"
 
+# TMUX ALIASES ----------------------------------------------------------------
+alias ta='tmux attach -t'
+alias tn='tmux new-session -s'
+alias td='tmux detach'
+alias tl='tmux list-session'
 
 # GIT ALIASES -----------------------------------------------------------------
 alias gc='git commit'
