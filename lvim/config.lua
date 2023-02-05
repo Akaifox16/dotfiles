@@ -1,6 +1,6 @@
 -- general lvim.log.level = "warn"
 lvim.format_on_save = true
--- lvim.colorscheme = "tokyonight"
+lvim.colorscheme = "tokyonight"
 
 vim.opt.gdefault = true
 vim.opt.ignorecase = true
@@ -82,9 +82,9 @@ lvim.builtin.which_key.mappings["t"] = {
 
 -- TODO: User Config for predefined plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
-lvim.builtin.alpha.active = true
+lvim.builtin.alpha.active = false
 lvim.builtin.alpha.mode = "dashboard"
-lvim.builtin.terminal.active = true
+lvim.builtin.terminal.active = false
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.telescope.defaults.path_display = {
   shorten = {
@@ -93,6 +93,8 @@ lvim.builtin.telescope.defaults.path_display = {
   },
   truncate = true
 }
+
+lvim.builtin.lualine.style = "default"
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
@@ -111,9 +113,8 @@ lvim.builtin.treesitter.ensure_installed = {
   "yaml",
 }
 
-lvim.builtin.treesitter.ignore_install = { "haskell" }
 lvim.builtin.treesitter.highlight.enabled = true
-lvim.builtin.treesitter.rainbow.enabled = true
+lvim.builtin.treesitter.rainbow.enable = true
 
 -- generic LSP settings
 
