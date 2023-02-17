@@ -7,6 +7,7 @@ alias hcat='highlight -O ansi'
 alias v='lvim -w ~/.vimlog "$@"'
 alias vi='lvim -w ~/.vimlog "$@"'
 alias vim='lvim -w ~/.vimlog "$@"'
+alias vim='fd -tf --hidden --exclude .git/| fzf-tmux -p --reverse | xargs lvim' 
 
 alias zn='vim $NOTES_DIR/$(date +"%Y%m%d%H%M.md")'
 
@@ -16,7 +17,6 @@ alias ls=exa
 alias sl=exa
 alias c='clear'
 alias s='source ~/.zshrc'
-alias rm=trash
 alias trim="awk '{\$1=\$1;print}'"
 
 # TMUX ALIASES ----------------------------------------------------------------
@@ -29,11 +29,9 @@ alias tl='tmux list-session'
 alias gc='git commit'
 alias gco='git checkout'
 alias ga='git add'
-alias gt='git status'
 alias gb='git branch'
 alias gba='git branch --all'
 alias gbd='git branch -D'
-alias gcp='git cherry-pick'
 alias gd='git diff -w'
 alias gds='git diff -w --staged'
 alias grs='git restore --staged'

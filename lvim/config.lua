@@ -1,6 +1,7 @@
--- general lvim.log.level = "warn"
+-- general
+lvim.log.level = "warn"
 lvim.format_on_save = true
-lvim.colorscheme = "tokyonight"
+lvim.colorscheme = "tokyonight-storm"
 
 vim.opt.gdefault = true
 vim.opt.ignorecase = true
@@ -157,16 +158,6 @@ linters.setup {
 }
 
 lvim.plugins = {
-  { "ledger/vim-ledger" },
-  { "shaunsingh/nord.nvim" },
-  {
-    "folke/tokyonight.nvim",
-    config = function()
-      require('tokyonight').setup({
-        transparent = true
-      })
-    end
-  },
   { "tpope/vim-eunuch" },
   {
     "folke/trouble.nvim",

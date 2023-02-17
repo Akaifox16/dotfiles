@@ -4,6 +4,16 @@ source_if_exists () {
     fi
 }
 
+prepend_path () {
+  case ":${PATH}:" in
+    *:"$1":*)
+      ;;
+    *)
+      export PATH="$1:$PATH"
+      ;;
+  esac
+}
+
 source_if_exists $HOME/.env.sh
 source_if_exists $DOTFILES/zsh/history.zsh
 source_if_exists $DOTFILES/zsh/git.zsh
@@ -24,6 +34,11 @@ else
     source $ZSH_HIGHLIGHT_DIR/zsh-syntax-highlighting.zsh
 fi
 
+if test -z ${ZSH_SUGGEST_DIR+x}; then
+else
+  source $ZSH_SUGGEST_DIR/zsh-autosuggestions.zsh
+fi
+
 precmd() {
     source $DOTFILES/zsh/aliases.zsh
 }
@@ -31,8 +46,10 @@ precmd() {
 export VISUAL=nvim
 export EDITOR=nvim
 
-PATH="$PATH:/usr/local/sbin:$DOTFILES/bin:$HOME/.local/bin"
+prepend_path "$DOTFILES/bin"
+prepend_path "$HOME/.local/bin"
 
+# prepend_path ""
 eval "$(starship init zsh)"
 
 # VIM MODE (http://dougblack.io/words/zsh-vi-mode.html) -----------------------
