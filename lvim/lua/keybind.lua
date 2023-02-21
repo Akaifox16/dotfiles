@@ -19,3 +19,4 @@ lvim.builtin.which_key.mappings["k"] = { "<cmd>Telescope buffers<CR>", "Search B
 lvim.builtin.which_key.mappings["g"] = { "<cmd>Telescope grep_string<CR>", "Grep in dir" }
 
 lvim.builtin.which_key.mappings["L"]["t"] = { "<cmd>LvimToggleFormatOnSave<cr>", "ToggleFormatOnSave" }
+lvim.builtin.which_key.mappings['f'] = {}

@@ -1,18 +1,19 @@
 lvim.plugins = {
-  -- { "tpope/vim-eunuch" },
   { "ThePrimeagen/harpoon",
     config = function()
       require("harpoon").setup()
 
+      local mark = require('harpoon.mark')
+      local ui = require('harpoon.ui')
       -- harpoon functionality
-      vim.api.nvim_set_keymap("n", "<C-a>", '<cmd>lua require("harpoon.mark").add_file()<CR>', { noremap = true })
-      vim.api.nvim_set_keymap("n", "<C-e>", '<cmd>lua require("harpoon.ui").toggle_quick_menu()<CR>', { noremap = true })
+      vim.keymap.set('n', '<C-a>', mark.add_file)
+      vim.keymap.set('n', '<C-e>', ui.toggle_quick_menu)
 
       -- harpoon page navigation
-      vim.api.nvim_set_keymap("n", "<C-h>", '<cmd>lua require("harpoon.ui").nav_file(1)<CR>', { noremap = true })
-      vim.api.nvim_set_keymap("n", "<C-j>", '<cmd>lua require("harpoon.ui").nav_file(2)<CR>', { noremap = true })
-      vim.api.nvim_set_keymap("n", "<C-k>", '<cmd>lua require("harpoon.ui").nav_file(3)<CR>', { noremap = true })
-      vim.api.nvim_set_keymap("n", "<C-l>", '<cmd>lua require("harpoon.ui").nav_file(4)<CR>', { noremap = true })
+      vim.keymap.set('n', '<C-h>', function() ui.nav_file(1) end)
+      vim.keymap.set('n', '<C-j>', function() ui.nav_file(2) end)
+      vim.keymap.set('n', '<C-k>', function() ui.nav_file(3) end)
+      vim.keymap.set('n', '<C-l>', function() ui.nav_file(4) end)
     end
   },
   { "ThePrimeagen/refactoring.nvim",
@@ -26,7 +27,6 @@ lvim.plugins = {
         v = { "<cmd>lua require('refactoring').refactor('Extract Variable')<CR>", "extract variable" },
         i = { "<cmd>lua require('refactoring').refactor('Inline Variable')<CR>", "inline variable" },
       }
-
     end
   },
   {
@@ -47,7 +47,9 @@ lvim.plugins = {
   {
     "windwp/nvim-ts-autotag",
     config = function()
-      require("nvim-ts-autotag").setup()
+      require("nvim-ts-autotag").setup({
+        filetype = { 'html', 'xml', 'tsx', 'jsx' }
+      })
     end
   },
   -- {
@@ -65,37 +67,42 @@ lvim.plugins = {
             'class',
             'function',
             'method'
+          },
+          terraform = {
+            'block',
+            'object_elem',
+            'attributes',
           }
         }
       }
     end
   },
-  {
-    "kevinhwang91/nvim-bqf",
-    event = { "BufRead", "BufNew" },
-    config = function()
-      require("bqf").setup({
-        auto_enable = true,
-        preview = {
-          win_height = 12,
-          win_vheight = 12,
-          delay_syntax = 80,
-          border_chars = { "┃", "┃", "━", "━", "┏", "┓", "┗", "┛", "█" },
-        },
-        func_map = {
-          vsplit = "",
-          ptogglemode = "z,",
-          stoggleup = "",
-        },
-        filter = {
-          fzf = {
-            action_for = { ["ctrl-s"] = "split" },
-            extra_opts = { "--bind", "ctrl-o:toggle-all", "--prompt", "> " },
-          },
-        },
-      })
-    end,
-  },
+  -- {
+  --   "kevinhwang91/nvim-bqf",
+  --   event = { "BufRead", "BufNew" },
+  --   config = function()
+  --     require("bqf").setup({
+  --       auto_enable = true,
+  --       preview = {
+  --         win_height = 12,
+  --         win_vheight = 12,
+  --         delay_syntax = 80,
+  --         border_chars = { "┃", "┃", "━", "━", "┏", "┓", "┗", "┛", "█" },
+  --       },
+  --       func_map = {
+  --         vsplit = "",
+  --         ptogglemode = "z,",
+  --         stoggleup = "",
+  --       },
+  --       filter = {
+  --         fzf = {
+  --           action_for = { ["ctrl-s"] = "split" },
+  --           extra_opts = { "--bind", "ctrl-o:toggle-all", "--prompt", "> " },
+  --         },
+  --       },
+  --     })
+  --   end,
+  -- },
   {
     "windwp/nvim-spectre",
     event = "BufRead",
