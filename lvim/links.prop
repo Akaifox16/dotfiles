@@ -1,1 +1,5 @@
 $DOTFILES/lvim/config.lua=$HOME/.config/lvim/config.lua
+$DOTFILES/lvim/lua/lsp/formatter.lua=$HOME/.config/lvim/lua/lsp/formatter.lua
+$DOTFILES/lvim/lua/lsp/linter.lua=$HOME/.config/lvim/lua/lsp/linter.lua
+$DOTFILES/lvim/lua/keybind.lua=$HOME/.config/lvim/lua/keybind.lua
+$DOTFILES/lvim/lua/plugin.lua=$HOME/.config/lvim/lua/plugin.lua
