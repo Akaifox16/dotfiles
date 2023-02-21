@@ -22,7 +22,6 @@ alias trim="awk '{\$1=\$1;print}'"
 # TMUX ALIASES ----------------------------------------------------------------
 alias ta='tmux attach -t'
 alias tn='tmux new-session -s'
-alias td='tmux detach'
 alias tl='tmux list-session'
 
 # GIT ALIASES -----------------------------------------------------------------

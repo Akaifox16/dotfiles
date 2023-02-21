@@ -26,10 +26,9 @@ cnoreabbrev Q! q!
 lvim.leader = "space"
 -- add your own keymapping
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
-lvim.keys.normal_mode["<C-l>"] = ":bnext<cr>"
-lvim.keys.normal_mode["<C-h>"] = ":bprev<cr>"
 lvim.keys.normal_mode["<C-n>"] = ":NvimTreeToggle<cr>"
 lvim.keys.normal_mode[", "] = ":nohl<cr>"
+
 -- unmap a default keymapping
 -- lvim.keys.normal_mode["<C-Up>"] = false
 -- edit a default keymapping
@@ -69,16 +68,8 @@ lvim.builtin.which_key.mappings["g"] = { "<cmd>Telescope grep_string<CR>", "Grep
 --   w = { "<cmd>Trouble workspace_diagnostics<cr>", "Wordspace Diagnostics" },
 -- }
 
+
 lvim.builtin.which_key.mappings["L"]["t"] = { "<cmd>LvimToggleFormatOnSave<cr>", "ToggleFormatOnSave" }
-lvim.builtin.which_key.mappings["t"] = {
-  name = "Diagnostics",
-  t = { "<cmd>TroubleToggle<cr>", "trouble" },
-  w = { "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "workspace" },
-  d = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "document" },
-  q = { "<cmd>TroubleToggle quickfix<cr>", "quickfix" },
-  l = { "<cmd>TroubleToggle loclist<cr>", "loclist" },
-  r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
-}
 
 
 -- TODO: User Config for predefined plugins
@@ -86,15 +77,20 @@ lvim.builtin.which_key.mappings["t"] = {
 lvim.builtin.alpha.active = false
 lvim.builtin.alpha.mode = "dashboard"
 lvim.builtin.terminal.active = false
+
+-- nvim tree config
 lvim.builtin.nvimtree.setup.view.side = "left"
+
+-- telescope config
 lvim.builtin.telescope.defaults.path_display = {
   shorten = {
-    len = 3,
+    len = 5,
     exclude = { 1, -1 }
   },
   truncate = true
 }
 
+-- lua line styling
 lvim.builtin.lualine.style = "default"
 
 -- if you don't want all the parsers change this to a table of the ones you want
@@ -110,7 +106,6 @@ lvim.builtin.treesitter.ensure_installed = {
   "tsx",
   "css",
   "rust",
-  "java",
   "yaml",
 }
 
@@ -128,9 +123,7 @@ lvim.builtin.treesitter.rainbow.enable = true
 
 -- ---@usage setup a server -- see: https://www.lunarvim.org/languages/#overriding-the-default-configuration
 -- local opts = {} -- check the lspconfig documentation for a list of all possible options
--- require("lvim.lsp.manager").setup("pylsp", opts)
-
--- -- you can set a custom on_attach function that will be used for all the language servers
+-- require("lvim.lsp.manager").setup("pylsp", opts) -- you can set a custom on_attach function that will be used for all the language servers
 -- -- See <https://github.com/neovim/nvim-lspconfig#keybindings-and-completion>
 -- lvim.lsp.on_attach_callback = function(client, bufnr)
 --   local function buf_set_option(...)
@@ -150,18 +143,58 @@ formatters.setup {
 
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
-  -- { command = "eslint_d", filetypes = { "javascript", "typescript", "typescriptreact", "javascriptreact" } },
-  {
-    command = "shellcheck",
-    extra_args = { "--severity", "warning" },
-  },
+  { command = "eslint_d", filetypes = { "javascript", "typescript", "typescriptreact", "javascriptreact" } },
+  -- {
+  --   command = "shellcheck",
+  --   extra_args = { "--severity", "warning" },
+  -- },
 }
 
 lvim.plugins = {
-  { "tpope/vim-eunuch" },
+  -- { "tpope/vim-eunuch" },
+  { "ThePrimeagen/harpoon",
+    config = function()
+      require("harpoon").setup()
+
+      -- harpoon functionality
+      vim.api.nvim_set_keymap("n", "<C-a>", '<cmd>lua require("harpoon.mark").add_file()<CR>', { noremap = true })
+      vim.api.nvim_set_keymap("n", "<C-e>", '<cmd>lua require("harpoon.ui").toggle_quick_menu()<CR>', { noremap = true })
+
+      -- harpoon page navigation
+      vim.api.nvim_set_keymap("n", "<C-h>", '<cmd>lua require("harpoon.ui").nav_file(1)<CR>', { noremap = true })
+      vim.api.nvim_set_keymap("n", "<C-j>", '<cmd>lua require("harpoon.ui").nav_file(2)<CR>', { noremap = true })
+      vim.api.nvim_set_keymap("n", "<C-k>", '<cmd>lua require("harpoon.ui").nav_file(3)<CR>', { noremap = true })
+      vim.api.nvim_set_keymap("n", "<C-l>", '<cmd>lua require("harpoon.ui").nav_file(4)<CR>', { noremap = true })
+    end
+  },
+  { "ThePrimeagen/refactoring.nvim",
+    config = function()
+      require("refactoring").setup()
+
+      lvim.builtin.which_key.mappings['r'] = {
+        name = 'refactor',
+        e = { "<cmd>lua require('refactoring').refactor('Extract Function')<CR>", "extract function" },
+        f = { "<cmd>lua require('refactoring').refactor('Extract Function To File')<CR>", "extract function to file" },
+        v = { "<cmd>lua require('refactoring').refactor('Extract Variable')<CR>", "extract variable" },
+        i = { "<cmd>lua require('refactoring').refactor('Inline Variable')<CR>", "inline variable" },
+      }
+
+    end
+  },
   {
     "folke/trouble.nvim",
     cmd = "TroubleToggle",
+    config = function()
+      lvim.builtin.which_key.mappings["t"] = {
+        name = "Diagnostics",
+        t = { "<cmd>TroubleToggle<cr>", "trouble" },
+        w = { "<cmd>TroubleToggle lsp_workspace_diagnostics<cr>", "workspace" },
+        d = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "document" },
+        q = { "<cmd>TroubleToggle quickfix<cr>", "quickfix" },
+        l = { "<cmd>TroubleToggle loclist<cr>", "loclist" },
+        r = { "<cmd>TroubleToggle lsp_references<cr>", "references" },
+      }
+    end
   },
   {
     "windwp/nvim-ts-autotag",
@@ -169,9 +202,9 @@ lvim.plugins = {
       require("nvim-ts-autotag").setup()
     end
   },
-  {
-    "p00f/nvim-ts-rainbow",
-  },
+  -- {
+  --   "p00f/nvim-ts-rainbow",
+  -- },
   {
     "romgrk/nvim-treesitter-context",
     config = function()
@@ -188,7 +221,40 @@ lvim.plugins = {
         }
       }
     end
-  }
+  },
+  {
+    "kevinhwang91/nvim-bqf",
+    event = { "BufRead", "BufNew" },
+    config = function()
+      require("bqf").setup({
+        auto_enable = true,
+        preview = {
+          win_height = 12,
+          win_vheight = 12,
+          delay_syntax = 80,
+          border_chars = { "┃", "┃", "━", "━", "┏", "┓", "┗", "┛", "█" },
+        },
+        func_map = {
+          vsplit = "",
+          ptogglemode = "z,",
+          stoggleup = "",
+        },
+        filter = {
+          fzf = {
+            action_for = { ["ctrl-s"] = "split" },
+            extra_opts = { "--bind", "ctrl-o:toggle-all", "--prompt", "> " },
+          },
+        },
+      })
+    end,
+  },
+  {
+    "windwp/nvim-spectre",
+    event = "BufRead",
+    config = function()
+      require("spectre").setup()
+    end,
+  },
 }
 
 
