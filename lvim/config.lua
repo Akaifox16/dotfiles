@@ -12,6 +12,7 @@ lvim.colorscheme = "tokyonight-storm"
 vim.opt.gdefault = true
 vim.opt.ignorecase = true
 vim.opt.linebreak = true
+vim.opt.nu = true
 vim.opt.relativenumber = true
 
 lvim.builtin.gitsigns.active = true;

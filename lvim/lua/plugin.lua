@@ -1,4 +1,28 @@
 lvim.plugins = {
+  { 'phaazon/hop.nvim',
+    event = 'BufRead',
+    branch = 'v2',
+    config = function()
+      require('hop').setup({
+        keys = 'etovxqpdygfblzhckisuran'
+      })
+      local hop = require('hop')
+      local directions = require('hop.hint').HintDirection
+
+      vim.keymap.set('n', 'f', function()
+        hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
+      end, { remap = true })
+      vim.keymap.set('n', 'F', function()
+        hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
+      end, { remap = true })
+      vim.keymap.set('n', 't', function()
+        hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })
+      end, { remap = true })
+      vim.keymap.set('n', 'T', function()
+        hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = -1 })
+      end, { remap = true })
+    end
+  },
   { "ThePrimeagen/harpoon",
     config = function()
       require("harpoon").setup()
@@ -29,8 +53,7 @@ lvim.plugins = {
       }
     end
   },
-  {
-    "folke/trouble.nvim",
+  { "folke/trouble.nvim",
     cmd = "TroubleToggle",
     config = function()
       lvim.builtin.which_key.mappings["t"] = {
@@ -44,19 +67,32 @@ lvim.plugins = {
       }
     end
   },
-  {
-    "windwp/nvim-ts-autotag",
+  { "folke/todo-comments.nvim",
+    config = function()
+      require('todo-comments').setup()
+
+      lvim.builtin.which_key.mappings['z'] = {
+        name = 'Todo',
+        q = { "<cmd>TodoQuickFix<cr>", 'quickfix' },
+        l = { "<cmd>TodoTrouble<cr>", 'list' }
+      }
+
+    end
+  },
+  { "windwp/nvim-ts-autotag",
     config = function()
       require("nvim-ts-autotag").setup({
         filetype = { 'html', 'xml', 'tsx', 'jsx' }
       })
     end
   },
-  -- {
-  --   "p00f/nvim-ts-rainbow",
-  -- },
-  {
-    "romgrk/nvim-treesitter-context",
+  { "windwp/nvim-spectre",
+    event = "BufRead",
+    config = function()
+      require("spectre").setup()
+    end,
+  },
+  { "romgrk/nvim-treesitter-context",
     config = function()
       require("treesitter-context").setup {
         enable = true,
@@ -76,38 +112,5 @@ lvim.plugins = {
         }
       }
     end
-  },
-  -- {
-  --   "kevinhwang91/nvim-bqf",
-  --   event = { "BufRead", "BufNew" },
-  --   config = function()
-  --     require("bqf").setup({
-  --       auto_enable = true,
-  --       preview = {
-  --         win_height = 12,
-  --         win_vheight = 12,
-  --         delay_syntax = 80,
-  --         border_chars = { "┃", "┃", "━", "━", "┏", "┓", "┗", "┛", "█" },
-  --       },
-  --       func_map = {
-  --         vsplit = "",
-  --         ptogglemode = "z,",
-  --         stoggleup = "",
-  --       },
-  --       filter = {
-  --         fzf = {
-  --           action_for = { ["ctrl-s"] = "split" },
-  --           extra_opts = { "--bind", "ctrl-o:toggle-all", "--prompt", "> " },
-  --         },
-  --       },
-  --     })
-  --   end,
-  -- },
-  {
-    "windwp/nvim-spectre",
-    event = "BufRead",
-    config = function()
-      require("spectre").setup()
-    end,
   },
 }

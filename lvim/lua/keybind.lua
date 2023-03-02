@@ -20,3 +20,5 @@ lvim.builtin.which_key.mappings["g"] = { "<cmd>Telescope grep_string<CR>", "Grep
 
 lvim.builtin.which_key.mappings["L"]["t"] = { "<cmd>LvimToggleFormatOnSave<cr>", "ToggleFormatOnSave" }
 lvim.builtin.which_key.mappings['f'] = {}
+lvim.builtin.which_key.mappings['e'] = {}
+lvim.builtin.which_key.mappings['h'] = { '<cmd>nohlsearch<CR>', 'Clear Search Highlight' }
